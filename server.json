@@ -15,6 +15,14 @@
             "category": "Alimentação",
             "price":1500,
             "createdAt": "2024-03-20T19:00:12.812Z"
+        },
+        {
+            "id":3,
+            "description": "Pc Hp corei7",
+            "type": "income",
+            "category": "Investimento",
+            "price":100000,
+            "createdAt": "2024-04-10T19:00:12.812Z"
         }
     ]
 }
