@@ -10,6 +10,8 @@ import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
 import * as z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionContext";
 
 //1 useform criei o esquema com nome dos campos dos inputs
 const NewTransactionFormSchema = z.object({
@@ -22,25 +24,32 @@ const NewTransactionFormSchema = z.object({
 //2 useform peguei os inputs e lhes tipei conforme o esquema
 type NewTransactionFormInputs = z.infer<typeof NewTransactionFormSchema>;
 export function NewTransactionModal() {
+const {createTransactions}= useContext(TransactionsContext)
   //3 useform necessario que seja assim , ATT: controlar onde colocar os inputs e o schema
   const {
     // 8 useform, adicionei o control para dados que nao vem direcatamente do input ou outro formElement como checkbox, textarea etc..
     control,
     register,
     handleSubmit,
+    // para resetar quando terminar a requisicao
+    reset,
     formState: { isSubmitting },
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(NewTransactionFormSchema),
     // 10 useform para colocar certos campos do passo 1 com valores padraos
-    defaultValues:{
+    defaultValues: {
       type: "income",
-    }
+    },
   });
 
   //4 useform essa e a funcao que vai executar quando for submeter o formulario, ATT tipar data
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // levei a funcao que vai criar nova transaction no contexto, porque a tabela nao atualizou sozinha
+    // essa funcao vai criar nova transaction no contexto
+
+   await createTransactions(data)
+    // 
+    reset();
   }
 
   return (
@@ -81,7 +90,10 @@ export function NewTransactionModal() {
             render={({ field }) => {
               // console.log(field)
               return (
-                <TransactioType onValueChange={field.onChange} value={field.value}>
+                <TransactioType
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
                   <TransactionTypeButton
                     variant="income"
                     value="income"

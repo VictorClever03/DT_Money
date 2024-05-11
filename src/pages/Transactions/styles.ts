@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Trash } from "phosphor-react";
+
 
 export const TransactionsContainer = styled.main`
   width: 100%;
@@ -35,4 +37,14 @@ interface PriceHighlightProps{
 }
 export const PriceHighlight = styled.span<PriceHighlightProps>`
 color: ${props => props.variant == 'income' ? props.theme["green-300"] : props.theme["red-300"]}
+`;
+
+export const TrashIcon = styled(Trash)`
+color: ${props => props.theme["red-300"]};
+cursor: pointer;
+
+&:hover{
+    color: ${props => props.theme["red-500"]};
+    transition: color 0.2s;
+}
 `;

@@ -6,13 +6,17 @@ import {
   PriceHighlight,
   TransactionsContainer,
   TransactionTable,
+  TrashIcon,
 } from "./styles";
 import { TransactionsContext } from "../../contexts/TransactionContext";
 import { dateFormatter, priceFormatter } from "../../utils/Farmatter";
 
 export function Transactions() {
-  const { transactions } = useContext(TransactionsContext);
+  const { transactions, deleteTransactions } = useContext(TransactionsContext);
 
+  async function handleDeleteTrasaction(id: number) {
+    await deleteTransactions(id);
+  }
   return (
     <div>
       <Header />
@@ -32,7 +36,14 @@ export function Transactions() {
                     </PriceHighlight>
                   </td>
                   <td>{transaction.category}</td>
-                  <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+                  <td>
+                    {dateFormatter.format(new Date(transaction.createdAt))}
+                  </td>
+                  <td width="10%">
+                    <TrashIcon
+                      onClick={() => handleDeleteTrasaction(transaction.id)}
+                    />
+                  </td>
                 </tr>
               );
             })}
