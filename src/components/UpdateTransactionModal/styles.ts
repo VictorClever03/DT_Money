@@ -85,7 +85,7 @@ interface TransactionTypeButtonProps {
   variant: "income" | "outcome";
 }
 export const TransactionTypeButton = styled(
-  RadioGroup.Item
+  RadioGroup.Item,
 )<TransactionTypeButtonProps>`
   background: ${(props) => props.theme["gray-700"]};
   padding: 1rem;
@@ -117,7 +117,9 @@ export const TransactionTypeButton = styled(
         ? props.theme["green-500"]
         : props.theme["red-500"]};
     color: ${(props) => props.theme.white};
-    transition: background-color 0.2s, color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
   }
   &:focus {
     box-shadow: 0 0 0 2px

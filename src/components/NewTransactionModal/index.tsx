@@ -24,7 +24,7 @@ const NewTransactionFormSchema = z.object({
 //2 useform peguei os inputs e lhes tipei conforme o esquema
 type NewTransactionFormInputs = z.infer<typeof NewTransactionFormSchema>;
 export function NewTransactionModal() {
-const {createTransactions}= useContext(TransactionsContext)
+  const { createTransactions } = useContext(TransactionsContext);
   //3 useform necessario que seja assim , ATT: controlar onde colocar os inputs e o schema
   const {
     // 8 useform, adicionei o control para dados que nao vem direcatamente do input ou outro formElement como checkbox, textarea etc..
@@ -47,8 +47,8 @@ const {createTransactions}= useContext(TransactionsContext)
     // levei a funcao que vai criar nova transaction no contexto, porque a tabela nao atualizou sozinha
     // essa funcao vai criar nova transaction no contexto
 
-   await createTransactions(data)
-    // 
+    await createTransactions(data);
+    //
     reset();
   }
 

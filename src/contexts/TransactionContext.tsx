@@ -23,7 +23,7 @@ interface TransactionContextType {
   createTransactions: (data: createTransactionsInput) => Promise<void>;
   updateTransactions: (
     data: createTransactionsInput,
-    id: number
+    id: number,
   ) => Promise<void>;
   deleteTransactions: (id: number) => Promise<void>;
 }
@@ -78,7 +78,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     if (response.data) {
       // para apresentar directamente os resultados na tela
       setTransactions((prevItems) =>
-        prevItems.map((item) => (item.id === id ? response.data : item))
+        prevItems.map((item) => (item.id === id ? response.data : item)),
       );
     }
   }
@@ -90,7 +90,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     if (response.data) {
       // para apresentar directamente os resultados na tela
       setTransactions(
-        transactions.filter((transaction) => transaction.id !== id)
+        transactions.filter((transaction) => transaction.id !== id),
       );
     }
   }
