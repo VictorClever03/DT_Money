@@ -19,7 +19,7 @@ export const TransactionTable = styled.table`
   td {
     padding: 1.2rem 2rem;
     background: ${(props) => props.theme["gray-700"]};
-    
+    cursor: pointer;
     &:first-child {
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
@@ -29,6 +29,20 @@ export const TransactionTable = styled.table`
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
     }
+
+    /* hover na ultima coluna de cada linha, some com todos elementos */
+    &:last-child *{
+      visibility: hidden;
+      opacity: 0;
+    }
+    /* reaparece com o elemento especifico */
+    &.visible *{
+      visibility: visible;
+      opacity: 1;
+      transition: all .2s;
+    }
+
+    
   }
 
 `;
