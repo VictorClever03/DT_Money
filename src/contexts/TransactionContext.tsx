@@ -21,6 +21,10 @@ interface TransactionContextType {
   // 1 query
   loadTransactions: (query?: string) => Promise<void>;
   createTransactions: (data: createTransactionsInput) => Promise<void>;
+  updateTransactions: (
+    data: createTransactionsInput,
+    id: number
+  ) => Promise<void>;
   deleteTransactions: (id: number) => Promise<void>;
 }
 
@@ -43,6 +47,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     });
     setTransactions(response.data);
   }
+  // funcao pra criar nova transaction
   async function createTransactions(data: createTransactionsInput) {
     const { description, category, price, type } = data;
     const response = await api.post("transactions", {
@@ -54,15 +59,39 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       // esta e outra forma, aconselhado em forms pequenos
       // ...data,
     });
+    // para apresentar directamente os resultados na tela
     setTransactions((state) => [response.data, ...state]);
+  }
+
+  // funcao pra actualizar uma transacao existente
+  async function updateTransactions(data: createTransactionsInput, id: number) {
+    const { description, category, price, type } = data;
+    const response = await api.put(`/transactions/${id}`, {
+      description,
+      price,
+      category,
+      type,
+      createdAt: new Date(),
+      // esta e outra forma, aconselhado em forms pequenos
+      // ...data,
+    });
+    if (response.data) {
+      // para apresentar directamente os resultados na tela
+      setTransactions((prevItems) =>
+        prevItems.map((item) => (item.id === id ? response.data : item))
+      );
+    }
   }
 
   // funcao para deletar uma transacao
   async function deleteTransactions(id?: number) {
     const response = await api.delete(`/transactions/${id}`);
     // se deletou, entao filtra dados menos o id da transacao que deletamos
-    if(response.data){
-      setTransactions(transactions.filter(transaction => transaction.id!==id));
+    if (response.data) {
+      // para apresentar directamente os resultados na tela
+      setTransactions(
+        transactions.filter((transaction) => transaction.id !== id)
+      );
     }
   }
 
@@ -77,6 +106,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         loadTransactions,
         // funcao que vai criar nova transaction
         createTransactions,
+        updateTransactions,
         deleteTransactions,
       }}
     >

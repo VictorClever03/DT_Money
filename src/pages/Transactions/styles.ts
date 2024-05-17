@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Trash } from "phosphor-react";
+import { Eye, Trash } from "phosphor-react";
 
 
 export const TransactionsContainer = styled.main`
@@ -45,6 +45,15 @@ cursor: pointer;
 
 &:hover{
     color: ${props => props.theme["red-500"]};
+    transition: color 0.2s;
+}
+`;
+export const EyeIcon = styled(Eye)`
+color: ${props => props.theme["green-300"]};
+cursor: pointer;
+
+&:hover{
+    color: ${props => props.theme["green-500"]};
     transition: color 0.2s;
 }
 `;

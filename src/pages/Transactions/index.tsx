@@ -2,7 +2,10 @@ import { useContext } from "react";
 import { Header } from "../../components/Header";
 import { Summary } from "../../components/Summary";
 import { SearchForm } from "./components/SearchForm";
+import * as Dialog from "@radix-ui/react-dialog";
+
 import {
+  EyeIcon,
   PriceHighlight,
   TransactionsContainer,
   TransactionTable,
@@ -10,6 +13,7 @@ import {
 } from "./styles";
 import { TransactionsContext } from "../../contexts/TransactionContext";
 import { dateFormatter, priceFormatter } from "../../utils/Farmatter";
+import { UpdateTransactionModal } from "../../components/UpdateTransactionModal";
 
 export function Transactions() {
   const { transactions, deleteTransactions } = useContext(TransactionsContext);
@@ -43,6 +47,14 @@ export function Transactions() {
                     <TrashIcon
                       onClick={() => handleDeleteTrasaction(transaction.id)}
                     />
+                       {' '}
+                    <Dialog.Root>
+                      <Dialog.Trigger asChild>
+                        <EyeIcon/>
+                      </Dialog.Trigger>
+                   
+                      <UpdateTransactionModal id={transaction.id}/>
+                    </Dialog.Root>
                   </td>
                 </tr>
               );
